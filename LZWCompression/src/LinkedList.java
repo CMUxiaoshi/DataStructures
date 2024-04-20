@@ -92,12 +92,4 @@ public class LinkedList {
         }
     }
 
-    public static void main(String[] args) {
-        LinkedList ll = new LinkedList();
-        ll.insert("a", "b");
-        ll.insert("c", "d");
-        System.out.println(ll.valueOf("a"));
-        System.out.println(ll.valueOf("c"));
-        System.out.println(ll.getSize());
-    }
 }

@@ -78,14 +78,4 @@ public class HashSet {
         return Math.abs(key.hashCode()) % arraySize;
     }
 
-    public static void main(String[] args) {
-        HashSet hs = new HashSet();
-        System.out.println(hs.hashIndex("my"));
-        System.out.println(hs.contain("a"));
-        hs.insert("b", "c");
-        System.out.println(hs.contain("b"));
-        System.out.println(hs.valueOf("b"));
-        System.out.println(hs.getSize());
-
-    }
 }
