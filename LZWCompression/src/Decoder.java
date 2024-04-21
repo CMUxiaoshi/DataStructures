@@ -26,6 +26,9 @@ public class Decoder {
 
     private static final int twelveBit = 4096; // 12 bit output limit.
 
+    private int inCount;
+
+    private int outCount;
     public Decoder(String inputFile, String outputFile) throws FileNotFoundException {
         in = new DataInputStream(
                 new BufferedInputStream(
@@ -39,6 +42,8 @@ public class Decoder {
         codeword = new String[2];
         priorPointer = 0;
         key = bitLimit;
+        inCount = 0;
+        outCount = 0;
     }
 
     private void initDict() {
@@ -86,7 +91,9 @@ public class Decoder {
     private void readThreeBytes() throws IOException {
         for (int i = 0; i < buffer.length; i++) {
             byteToString(in.readByte());
+            inCount = inCount + 1;
         }
+
     }
 
     /**
@@ -99,6 +106,7 @@ public class Decoder {
             char charResult = s.charAt(i);
             byte result = (byte) (charResult & 0xFF);
             out.writeByte(result);
+            outCount = outCount + 1;
         }
     }
 
@@ -167,4 +175,11 @@ public class Decoder {
         }
     }
 
+    public int getInCount() {
+        return inCount;
+    }
+
+    public int getOutCount() {
+        return outCount;
+    }
 }

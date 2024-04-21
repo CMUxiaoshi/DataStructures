@@ -21,6 +21,9 @@ public class Encoder {
 
     private static final int twelveBit = 4096; // 12 bit output limit.
 
+    private int inCount;
+    private int outCount;
+
     public Encoder(String inputFile, String outputFile) throws FileNotFoundException {
         in = new DataInputStream(
                 new BufferedInputStream(
@@ -32,6 +35,8 @@ public class Encoder {
         outCode = bitLimit;
         bufferIndex = 0;
         buffer = new int[2];
+        inCount = 0;
+        outCount = 0;
     }
 
     /**
@@ -86,6 +91,7 @@ public class Encoder {
             out.writeByte(byte1);
             out.writeByte(byte2);
             out.writeByte(byte3);
+            outCount = outCount + 3;
         } else {
             buffer[bufferIndex] = codeword;
             bufferIndex = bufferIndex + 1;
@@ -105,6 +111,7 @@ public class Encoder {
             int byte2 =  (combined & 0xFF);
             out.writeByte(byte1);
             out.writeByte(byte2);
+            outCount = outCount + 2;
         }
     }
 
@@ -121,6 +128,7 @@ public class Encoder {
         try {
             while (true) {
                 byte byteIn = in.readByte();
+                inCount = inCount + 1;
                 char c = byteToChar(byteIn);
                 if (encodeDict.contain(s + c)) {
                     s = s + c;
@@ -138,5 +146,13 @@ public class Encoder {
             in.close();
             out.close();
         }
+    }
+
+    public int getInCount() {
+        return inCount;
+    }
+
+    public int getOutCount() {
+        return outCount;
     }
 }

@@ -1,23 +1,33 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 /**
- * Driver class for LZW Compression
+ * Driver class for LZW Compression.
+ * This LZW Compression can be directly use on both ASCII files and binary files.
+ * For words.html, the size decreases from 2437kb to 1046kb.
+ * For CrimeLatLonXY1990.csv, the size decreases from 2548kb to 1254kb.
+ * For 01_Overview.mpt, however, the size increases from 24423 kb to 32978 kb.
  * @author Xiao Shi
  * @AndrewID xiaoshi
  * */
 public class LZWCompression {
     public static void main(String[] args) throws IOException {
-        String[] inputFile = {"files/shortwords.txt", "files/words.html",
-                "files/CrimeLatLonXY.csv", "files/01_Overview.mp4"};
-        String[] compressedFile = {"files/shortwords-compressed.txt", "files/words-compressed.html",
-                "files/CrimeLatLonXY-compressed.csv", "files/01_Overview-compressed.mp4"};
-        String[] decompressedFile = {"files/shortwordss-decompressed.txt", "files/wordss-decompressed.html",
-                "files/CrimeLatLonXY-decompressed.csv", "files/01_Overviews-decompressed.mp4"};
-        for (int i = 0; i < inputFile.length; i++) {
-            Encoder ec = new Encoder(inputFile[i], compressedFile[i]);
-            ec.compress();
-            Decoder dc = new Decoder(compressedFile[i], decompressedFile[i]);
-            dc.depress();
+        if (args.length < 4 || !(args[0].equals("-c") || args[0].equals("-d")) || !args[1].equals("-v")) {
+            return;
+        }
+
+        String inputFileName = args[2];
+        String outputFileName = args[3];
+
+        if (args[0].equals("-c")) {
+            Encoder c = new Encoder(inputFileName, outputFileName);
+            c.compress();
+            System.out.println("bytes read = "+ c.getInCount() + ", bytes written = " + c.getOutCount());
+        } else if (args[0].equals("-d")) {
+            Decoder d = new Decoder(inputFileName, outputFileName);
+            d.depress();
+            System.out.println("bytes read = "+ d.getInCount() + ", bytes written = " + d.getOutCount());
         }
     }
 }
+
+
