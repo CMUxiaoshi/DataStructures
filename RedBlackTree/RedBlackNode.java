@@ -1,3 +1,9 @@
+/**
+ * This is the RedBlackNode class. 
+ * It is used to represent a node in the RedBlackTree.
+ * @author Xiao Shi
+ * andrew id xiaoshi
+*/
 public class RedBlackNode {
     private static int BLACK = 0;
     private static int RED = 1;
